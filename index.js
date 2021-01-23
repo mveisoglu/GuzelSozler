@@ -47,7 +47,7 @@ app.route("/api/guzelsoz/:id")
       overwrite: true
     }, function(err) {
       if (!err)
-        res.send("Kayıt başarıyla güncellendi.");
+        res.send({ sonuc : "Kayıt başarıyla güncellendi."});
       else
         res.send(err);
     });
@@ -59,7 +59,7 @@ app.route("/api/guzelsoz/:id")
       $set: req.body
     }, function(err) {
       if (!err)
-        res.send("Kayıt başarıyla güncellendi.");
+        res.send({ sonuc : "Kayıt başarıyla güncellendi."});
       else
         res.send(err);
     })
@@ -69,7 +69,7 @@ app.route("/api/guzelsoz/:id")
       _id: req.params.id
     }, function(err) {
       if (!err)
-        res.send("Kayıt başarıyla silindi.");
+        res.send({ sonuc : "Kayıt başarıyla silindi."});
       else
         res.send(err);
     })
@@ -90,7 +90,7 @@ app.route("/api/guzelsozler")
     });
     guzelSoz.save(function(err) {
       if (!err)
-        res.send("Kayıt başarıyla oluşturuldu.");
+        res.send(  { sonuc : "Kayıt başarıyla oluşturuldu." }   );
       else
         res.send(err);
     });
@@ -98,7 +98,7 @@ app.route("/api/guzelsozler")
   .delete(function(req, res) {
     GuzelSoz.deleteMany({}, function(err) {
       if (!err)
-        res.send("Tüm kayıtlar silindi.");
+        res.send({ sonuc : "Tüm kayıtlar silindi." });
       else
         res.send(err);
     });
