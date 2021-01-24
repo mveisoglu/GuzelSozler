@@ -102,7 +102,7 @@ app.get("/admin", function(req, res){
     /*GuzelSoz.find({}, function(err, gelenGuzelSozler){
       res.render("admin", {guzelsozler : gelenGuzelSozler});
     })*/
-    var link = "https://mveisoglu-guzelsozler.herokuapp.com/api/guzelsoz/";
+    var link = "https://mveisoglu-guzelsozler.herokuapp.com/api/guzelsozler";
     https.get(link , function(response){
       response.on("data", function(gelenGuzelSozler){
         // gelenGuzelSozler -> byte türünde gelmişti.
@@ -114,7 +114,7 @@ app.get("/admin", function(req, res){
 //https://guzelsozler.herokuapp.com/api/guzelsoz/600c683c986f50001534a062
 app.post("/kayit-sil", function(req, res){
     var id = req.body._id;
-    var link = " https://mveisoglu-guzelsozler.herokuapp.com/api/guzelsoz/"+id;
+    var link = " https://mveisoglu-guzelsozler.herokuapp.com/api/guzelsozler"+id;
     const gonderilecekler = JSON.stringify({
       sifre: 'parola1234'
     })
