@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const https = require("https");
 const app = express();
+
 const mongoose = require("mongoose");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/dosyalar"));
@@ -95,6 +97,43 @@ app.route("/api/guzelsozler")
         res.send({sonuc : "Şifre hatalı."});
       }
     });
+app.get("/admin", function(req, res){
+    // 1. Alternatif
+    /*GuzelSoz.find({}, function(err, gelenGuzelSozler){
+      res.render("admin", {guzelsozler : gelenGuzelSozler});
+    })*/
+    var link = "https://guzelsozler.herokuapp.com/api/guzelsozler";
+    https.get(link , function(response){
+      response.on("data", function(gelenGuzelSozler){
+        // gelenGuzelSozler -> byte türünde gelmişti.
+        var guzelSozler = JSON.parse(gelenGuzelSozler);
+        res.render("admin", { sozler : guzelSozler } );
+      })
+    });
+});
+//https://guzelsozler.herokuapp.com/api/guzelsoz/600c683c986f50001534a062
+app.post("/kayit-sil", function(req, res){
+    var id = req.body._id;
+    var link = " https://mveisoglu-guzelsozler.herokuapp.com/api/guzelsoz/"+id;
+    const gonderilecekler = JSON.stringify({
+      sifre: 'parola1234'
+    })
+    const secenekler = {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        'Content-Length': gonderilecekler.length
+      }
+    }
+    const baglanti = https.request(link, secenekler, function(response) {
+      response.on('data', function(gelenVeri) {
+        var sonuc = JSON.parse(gelenVeri);
+        res.send(sonuc);
+      })
+    })
+    baglanti.write(gonderilecekler);
+    baglanti.end();
+});
 let port = process.env.PORT;
 if(port == "" || port == null){
   port = 5000;
