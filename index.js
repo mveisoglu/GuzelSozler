@@ -102,7 +102,7 @@ app.get("/admin", function(req, res){
     /*GuzelSoz.find({}, function(err, gelenGuzelSozler){
       res.render("admin", {guzelsozler : gelenGuzelSozler});
     })*/
-    var link = "https://guzelsozler.herokuapp.com/api/guzelsozler";
+    var link = "https://mveisoglu-guzelsozler.herokuapp.com/api/guzelsoz/";
     https.get(link , function(response){
       response.on("data", function(gelenGuzelSozler){
         // gelenGuzelSozler -> byte türünde gelmişti.
